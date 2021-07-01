@@ -9,8 +9,8 @@
 String buffer;
 String command;
 
-// counting flag and millisecond
-bool counting = false;
+// delay time and end millisecond timestamp
+unsigned long delay_time = 0;
 unsigned long end_time = 0;
 
 void command_handler()
@@ -28,16 +28,19 @@ void command_handler()
     {
       digitalWrite(LED_PIN, HIGH);
     }
+    // send last state anyway
     Serial.print("L");
     Serial.println(digitalRead(LED_PIN));
     break;
   // timer command
   case 'T':
     // calculate the end time
-    end_time = millis() + command.substring(1).toInt();
-    // flag
-    counting = true;
-    Serial.println("TS");
+    delay_time = command.substring(1).toInt();
+    if (delay_time)
+    {
+      end_time = millis() + delay_time;
+      Serial.println("TS");
+    }
   // invalid commands
   default:
     break;
@@ -62,9 +65,9 @@ void setup()
 void loop()
 {
   // timer done, write message
-  if (counting && millis() >= end_time)
+  if (delay_time && millis() >= end_time)
   {
-    counting = false;
+    delay_time = 0;
     Serial.println("TE");
   }
 
