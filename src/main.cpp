@@ -1,7 +1,6 @@
 #include <Arduino.h>
 
 #define LED_PIN 5
-#define BUFFER_LENGTH 255
 
 // its not right to use variables like this
 
