@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#define LED_PIN 5
+#define LED_PIN LED_BUILTIN
 
 // its not right to use variables like this
 
